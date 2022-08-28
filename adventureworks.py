@@ -84,17 +84,17 @@ sql = """SELECT p.name, SUM(sod.unitprice) AS total_revenue
             LIMIT 5"""
 print(pd.read_sql(sql, conn))
 
-#print('')
-#print('')
-#print('Find the top ten sales territories with the most sales in the SalesOrderHeader, SalesOrderDetail, and Product tables')
-#sql = """SELECT st.name, SUM(soh.totaldue) AS total_revenue
-#            FROM sales.SalesOrderHeader soh
-#            JOIN sales.SalesTerritory st
-#            ON sod.productid = p.productid
-#            WHERE sod.modifieddate > '2013-07-01'
-#            GROUP BY p.name
-#            ORDER BY total_revenue DESC
-#            LIMIT 5"""
-#print(pd.read_sql(sql, conn))
+print('')
+print('')
+print('Find the top ten sales territories with the most sales in the SalesOrderHeader, SalesOrderDetail, and Product tables')
+sql = """SELECT st.name, SUM(soh.totaldue) AS total_revenue
+            FROM sales.SalesOrderHeader soh
+            JOIN sales.SalesTerritory st
+            ON soh.territoryid = st.territoryid
+            WHERE soh.orderdate > '2013-07-01'
+            GROUP BY st.name
+            ORDER BY total_revenue DESC
+            LIMIT 10"""
+print(pd.read_sql(sql, conn))
 
 
